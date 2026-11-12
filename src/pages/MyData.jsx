@@ -34,15 +34,10 @@ function MyData() {
 
   return (
     <>
-      <PageTitle title="Meus dados" subtitle="Consulte e atualize seus dados sempre que necessário." />
+      <PageTitle title="Atualize seus dados" subtitle="Consulte seus dados e atualize sempre que necessário." />
       <AsyncState loading={loading} error={error} empty={!form}>
         {form && (
           <>
-            <Card title="Dados acadêmicos">
-              <p>Instituição: {form.instituicao}</p>
-              <p>Curso: {form.curso}</p>
-              <p>Semestre: {form.semestre}</p>
-            </Card>
             <Card title="Dados pessoais">
               {saved && <p className="message">Dados salvos!</p>}
               <form className="form" onSubmit={handleSubmit}>
@@ -60,6 +55,13 @@ function MyData() {
                   <button className="btn" type="submit">Salvar</button>
                 </div>
               </form>
+            </Card>
+            <Card title="Dados acadêmicos" className="card-info">
+              <div className="info-row">
+                <p>Instituição de ensino: {form.instituicao}</p>
+                <p>Curso: {form.curso}</p>
+                <p>Semestre: {form.semestre}</p>
+              </div>
             </Card>
           </>
         )}

@@ -11,17 +11,17 @@ const OPTIONS = [
 
 function Documents() {
   return (
-    <>
-      <PageTitle title="Documentos" subtitle="Opções exibidas conforme as condições do contrato." />
+    <div className="page-round">
+      <PageTitle title="Documentos" subtitle="Opções exibidas conforme elegibilidade e condições disponíveis para o contrato." />
       <div className="grid">
-        {OPTIONS.map((item) => (
-          <Card key={item.title} title={item.title}>
+        {OPTIONS.map((item, index) => (
+          <Card key={item.title} title={item.title} className="doc-card">
             <p>{item.description}</p>
-            <button className="btn" onClick={() => mockAction(item.button)}>{item.button}</button>
+            <button className={index === 1 ? 'btn' : 'btn btn-outline'} onClick={() => mockAction(item.button)}>{item.button}</button>
           </Card>
         ))}
       </div>
-    </>
+    </div>
   )
 }
 

@@ -1,6 +1,6 @@
-function Card({ title, children }) {
+function Card({ title, className = '', children }) {
   return (
-    <section className="card">
+    <section className={`card ${className}`.trim()}>
       {title && <h3>{title}</h3>}
       {children}
     </section>

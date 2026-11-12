@@ -1,4 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom'
+import Topbar from './Topbar'
 import Sidebar from './Sidebar'
 import Header from './Header'
 
@@ -7,15 +8,18 @@ function Layout() {
   if (!localStorage.getItem('token')) return <Navigate to="/login" replace />
 
   return (
-    <div className="layout">
-      <Sidebar />
-      <div className="layout-content">
-        <Header />
-        <main className="main">
-          <Outlet />
-        </main>
+    <>
+      <Topbar />
+      <div className="app-body">
+        <Sidebar />
+        <div className="layout-content">
+          <Header />
+          <main className="main">
+            <Outlet />
+          </main>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

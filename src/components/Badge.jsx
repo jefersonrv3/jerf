@@ -17,7 +17,7 @@ const LABELS = {
 }
 
 const COLORS = {
-  APROVADO: 'green', PAGA: 'green', CONTRATADA: 'green', QUITADO: 'green', DISPONIVEL: 'green', SEM_PENDENCIAS: 'green',
+  APROVADO: 'green', PAGA: 'green', CONTRATADA: 'green', QUITADO: 'green', DISPONIVEL: 'blue',
   PENDENTE: 'red', VENCIDA: 'red', DOCUMENTO_PENDENTE: 'red',
   EM_ANALISE: 'yellow', EM_VALIDACAO: 'yellow', EM_ABERTO: 'yellow',
 }

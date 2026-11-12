@@ -19,7 +19,7 @@ function Payments() {
   }
 
   return (
-    <>
+    <div className="page-round">
       <PageTitle title="Pagamentos" subtitle="Acompanhe parcelas pagas, vencidas e documentos relacionados." />
       <AsyncState loading={payments.loading} error={payments.error} empty={!payments.data?.length}>
         {hasOverdue && overdue.data && (
@@ -27,39 +27,45 @@ function Payments() {
             <div className="alert">
               Existe uma parcela vencida em {formatDate(overdue.data.vencimento)}.
             </div>
-            <Card title="Detalhamento da parcela vencida">
-              <p>Valor original: {formatCurrency(overdue.data.valorOriginal)}</p>
-              <p>Juros e encargos: {formatCurrency(overdue.data.encargos)}</p>
-              <p><strong>Valor atualizado: {formatCurrency(overdue.data.valorAtualizado)}</strong></p>
-              <div className="row">
-                <button className="btn" onClick={() => mockAction('Emitir boleto atualizado')}>Emitir boleto atualizado</button>
-                <button className="btn btn-outline" onClick={copyBarcode}>Copiar código de barras</button>
-              </div>
-            </Card>
+            <div className="split">
+              <Card title="Detalhamento da parcela vencida">
+                <p className="kv"><span>Valor original</span><strong>{formatCurrency(overdue.data.valorOriginal)}</strong></p>
+                <p className="kv"><span>Juros e encargos</span><strong>{formatCurrency(overdue.data.encargos)}</strong></p>
+                <p className="kv kv-total"><span>Valor atualizado</span><strong>{formatCurrency(overdue.data.valorAtualizado)}</strong></p>
+              </Card>
+              <Card title="Como deseja pagar?">
+                <div className="stack">
+                  <button className="btn" onClick={() => mockAction('Emitir boleto atualizado')}>Emitir boleto atualizado</button>
+                  <button className="btn btn-outline" onClick={copyBarcode}>Copiar código de barras</button>
+                </div>
+              </Card>
+            </div>
           </>
         )}
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Parcela</th><th>Vencimento</th><th>Valor</th><th>Pagamento</th><th>Situação</th><th>Documento</th>
-            </tr>
-          </thead>
-          <tbody>
-            {(payments.data || []).map((p) => (
-              <tr key={p.parcela}>
-                <td>{p.parcela}</td>
-                <td>{formatDate(p.vencimento)}</td>
-                <td>{formatCurrency(p.valor)}</td>
-                <td>{formatDate(p.pagamento)}</td>
-                <td><Badge status={p.situacao} /></td>
-                <td>{p.documento}</td>
+        <div className="card card-table">
+          <table className="table table-plain">
+            <thead>
+              <tr>
+                <th>Parcela</th><th>Vencimento</th><th>Valor</th><th>Pagamento</th><th>Situação</th><th>Documento</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {(payments.data || []).map((p) => (
+                <tr key={p.parcela}>
+                  <td>{p.parcela}</td>
+                  <td className="strong-cell">{formatDate(p.vencimento)}</td>
+                  <td>{formatCurrency(p.valor)}</td>
+                  <td>{formatDate(p.pagamento)}</td>
+                  <td><Badge status={p.situacao} /></td>
+                  <td className="doc-cell">{p.documento}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </AsyncState>
-    </>
+    </div>
   )
 }
 
