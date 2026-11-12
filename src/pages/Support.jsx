@@ -9,19 +9,23 @@ function Support() {
   const { data, loading, error } = useFetch(getSupportTopics)
 
   return (
-    <>
-      <PageTitle title="Atendimento e suporte" subtitle="Escolha o assunto para iniciar um atendimento." />
+    <div className="page-round">
+      <PageTitle title="Atendimento e suporte" subtitle="Escolha o assunto para iniciar um atendimento já vinculado ao contrato." />
       <AsyncState loading={loading} error={error} empty={!data?.length}>
-        <div className="grid">
+        <div className="grid support-grid">
           {(data || []).map((topic, index) => (
-            <Card key={topic.id} title={`${index + 1}. ${topic.titulo}`}>
-              <p>{topic.descricao}</p>
-              <button className="btn" onClick={() => mockAction(topic.botao)}>{topic.botao}</button>
+            <Card key={topic.id} className="support-card">
+              <span className={index < 2 ? 'step-square' : 'step-square dark'}>{index + 1}</span>
+              <div>
+                <h3>{topic.titulo}</h3>
+                <p>{topic.descricao}</p>
+                <button className="btn btn-outline" onClick={() => mockAction(topic.botao)}>{topic.botao}</button>
+              </div>
             </Card>
           ))}
         </div>
       </AsyncState>
-    </>
+    </div>
   )
 }
 

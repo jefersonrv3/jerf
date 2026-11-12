@@ -10,32 +10,40 @@ function Closing() {
   const { data, loading, error } = useFetch(getClosing)
 
   return (
-    <>
-      <PageTitle title="Encerramento do contrato" subtitle="Acompanhe a quitação e a finalização do contrato." />
+    <div className="page-round">
+      <PageTitle title="Encerramento do contrato" subtitle="Acompanhe a quitação integral e a finalização do vínculo contratual." />
       <AsyncState loading={loading} error={error} empty={!data}>
         {data && (
           <>
-            <Card>
-              <h3>Contrato integralmente quitado</h3>
-              <p>Não existem parcelas ou encargos pendentes.</p>
+            <Card className="banner banner-success">
+              <div>
+                <h3>Contrato integralmente quitado</h3>
+                <p>Não existem parcelas ou encargos pendentes.</p>
+              </div>
               <Badge status={data.status} />
             </Card>
-            <Card title="Status do encerramento">
-              {data.etapas.map((step) => (
-                <p key={step.id}>{step.concluida ? '✓' : '○'} {step.nome}</p>
-              ))}
-            </Card>
-            <Card title="Documentos finais">
-              <div className="row">
-                {data.documentos.map((doc) => (
-                  <button key={doc} className="btn btn-outline" onClick={() => mockAction(doc)}>{doc}</button>
+            <div className="split">
+              <Card title="Status do encerramento">
+                {data.etapas.map((step) => (
+                  <div className="step-row" key={step.id}>
+                    <span className="check">{step.concluida ? '✓' : '○'}</span>
+                    <span className="name">{step.nome}</span>
+                    <span className="status">{step.concluida ? 'Concluída' : 'Pendente'}</span>
+                  </div>
                 ))}
-              </div>
-            </Card>
+              </Card>
+              <Card title="Documentos finais">
+                <div className="stack">
+                  {data.documentos.map((doc) => (
+                    <button key={doc} className="btn btn-outline" onClick={() => mockAction(doc)}>{doc}</button>
+                  ))}
+                </div>
+              </Card>
+            </div>
           </>
         )}
       </AsyncState>
-    </>
+    </div>
   )
 }
 

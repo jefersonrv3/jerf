@@ -24,36 +24,43 @@ function Overview() {
       <AsyncState loading={loading} error={error} empty={!current}>
         {current && financing.data && (
           <>
-            <Card>
-              <h3>Sua proposta está {current.situacao === 'EM_ANALISE' ? 'em análise' : 'em andamento'}</h3>
-              {pendingDocs > 0 && <p>Você tem {pendingDocs} documento(s) pendente(s) para enviar.</p>}
-              <Link className="btn" to={`/propostas/${current.id}`}>Ver proposta</Link>
-            </Card>
+            <div className="overview-top">
+              <div className="overview-left">
+                <section className="hero">
+                  <div>
+                    <h3>Sua proposta está {current.situacao === 'EM_ANALISE' ? 'em análise' : 'em andamento'}</h3>
+                    {pendingDocs > 0 && <p>Você tem {pendingDocs} documento(s) pendente(s) para enviar.</p>}
+                  </div>
+                  <Link className="btn btn-light" to={`/propostas/${current.id}`}>Ver proposta</Link>
+                </section>
 
-            <div className="grid">
-              <Card title="Proposta">
-                <p className="big">{current.id}</p>
-                <Badge status={current.situacao} />
-              </Card>
-              <Card title="Pendências">
-                <p className="big">{pendingDocs}</p>
-                <span className="label">documento(s)</span>
-              </Card>
-              <Card title="Próxima parcela">
-                <p className="big">{formatCurrency(financing.data.valorParcela)}</p>
-                <span className="label">vence em {formatDate(financing.data.proximoVencimento)}</span>
+                <div className="grid stats">
+                  <Card title="Proposta">
+                    <p className="big">{current.id}</p>
+                    <Badge status={current.situacao} />
+                  </Card>
+                  <Card title="Pendências">
+                    <p className="big">{pendingDocs}</p>
+                    <span className="label">documento(s)</span>
+                  </Card>
+                  <Card title="Próxima parcela">
+                    <p className="big">{formatCurrency(financing.data.valorParcela)}</p>
+                    <span className="label">vence em {formatDate(financing.data.proximoVencimento)}</span>
+                  </Card>
+                </div>
+              </div>
+
+              <Card title="Atalhos" className="shortcuts">
+                <div className="links">
+                  <Link to="/pagamentos">2ª via de boleto</Link>
+                  <Link to="/financiamento">Consultar contrato</Link>
+                  <Link to="/atendimento">Falar com atendimento</Link>
+                </div>
               </Card>
             </div>
 
-            <Card title="Atalhos">
-              <div className="links">
-                <Link to="/pagamentos">2ª via de boleto</Link>
-                <Link to="/financiamento">Consultar contrato</Link>
-                <Link to="/atendimento">Falar com atendimento</Link>
-              </div>
-            </Card>
-
-            <Card title="Linha do tempo">
+            <Card className="card-timeline">
+              <h3>Linha do tempo</h3>
               <Timeline currentStep={current.etapaAtual} />
             </Card>
           </>

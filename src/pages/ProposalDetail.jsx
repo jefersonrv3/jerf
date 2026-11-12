@@ -15,43 +15,47 @@ function ProposalDetail() {
 
   return (
     <>
-      <Link to="/propostas">‹ Voltar</Link>
+      <Link className="back-link" to="/propostas">‹ Voltar</Link>
       <AsyncState loading={loading} error={error} empty={!proposal}>
         {proposal && (
           <>
-            <PageTitle title={`Proposta ${proposal.id}`} subtitle={`${proposal.produto} • ${proposal.instituicao}`} />
-            <Badge status={proposal.situacao} />
-            <p></p>
-            <Card title="Etapas">
+            <div className="title-row">
+              <PageTitle title={`Proposta ${proposal.id}`} subtitle={`${proposal.produto} • ${proposal.instituicao}`} />
+              <Badge status={proposal.situacao} />
+            </div>
+            <Card className="card-timeline">
               <Timeline currentStep={proposal.etapaAtual} />
             </Card>
 
-            <Card title="Documentos e pendências">
-              <table className="table">
-                <tbody>
-                  {proposal.documentos.map((doc) => (
-                    <tr key={doc.id}>
-                      <td>{doc.nome}</td>
-                      <td><Badge status={doc.status} /></td>
-                      <td>
-                        {doc.status === 'PENDENTE' ? (
-                          <button className="btn" onClick={() => mockAction(`Enviar arquivo: ${doc.nome}`)}>Enviar arquivo</button>
-                        ) : (
-                          <button className="btn btn-outline" onClick={() => mockAction(`Visualizar: ${doc.nome}`)}>Visualizar</button>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </Card>
+            <div className="split">
+              <Card title="Documentos e pendências">
+                <p className="sub">Acompanhe cada item individualmente.</p>
+                <table className="table table-plain table-compact">
+                  <tbody>
+                    {proposal.documentos.map((doc) => (
+                      <tr key={doc.id}>
+                        <td>{doc.nome}</td>
+                        <td><Badge status={doc.status} /></td>
+                        <td>
+                          {doc.status === 'PENDENTE' ? (
+                            <button className="btn" onClick={() => mockAction(`Enviar arquivo: ${doc.nome}`)}>Enviar arquivo</button>
+                          ) : (
+                            <button className="btn btn-outline" onClick={() => mockAction(`Visualizar: ${doc.nome}`)}>Visualizar</button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </Card>
 
-            <Card title="Resumo">
-              <p>Valor solicitado: {formatCurrency(proposal.valor)}</p>
-              <p>Prazo: {proposal.prazo} meses</p>
-              <p>Curso: {proposal.curso}</p>
-              <p>Última atualização: {formatDate(proposal.atualizacao)}</p>
-            </Card>
+              <Card title="Resumo">
+                <p className="kv"><span>Valor solicitado</span><strong>{formatCurrency(proposal.valor)}</strong></p>
+                <p className="kv"><span>Prazo</span><strong>{proposal.prazo} meses</strong></p>
+                <p className="kv"><span>Curso</span><strong>{proposal.curso}</strong></p>
+                <p className="kv"><span>Última atualização</span><strong>{formatDate(proposal.atualizacao)}</strong></p>
+              </Card>
+            </div>
           </>
         )}
       </AsyncState>

@@ -18,7 +18,7 @@ function Proposals() {
 
   return (
     <>
-      <PageTitle title="Minhas propostas" subtitle="Consulte o andamento de cada solicitação." />
+      <PageTitle title="Minhas propostas" subtitle="Consulte o andamento e acesse as ações de cada solicitação." />
       <div className="filters">
         <input placeholder="Buscar por número" value={search} onChange={(e) => setSearch(e.target.value)} />
         <select value={status} onChange={(e) => setStatus(e.target.value)}>
@@ -30,28 +30,30 @@ function Proposals() {
         </select>
       </div>
       <AsyncState loading={loading} error={error} empty={filtered.length === 0}>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Proposta</th>
-              <th>Produto / Instituição</th>
-              <th>Atualização</th>
-              <th>Situação</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((item) => (
-              <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>{item.produto} • {item.instituicao}</td>
-                <td>{formatDate(item.atualizacao)}</td>
-                <td><Badge status={item.situacao} /></td>
-                <td><Link to={`/propostas/${item.id}`}>Ver detalhes ›</Link></td>
+        <div className="card card-table">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Proposta</th>
+                <th>Produto / Instituição</th>
+                <th>Atualização</th>
+                <th>Situação</th>
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filtered.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{item.produto} • {item.instituicao}</td>
+                  <td className="muted-cell">{formatDate(item.atualizacao)}</td>
+                  <td><Badge status={item.situacao} /></td>
+                  <td><Link to={`/propostas/${item.id}`}>Ver detalhes ›</Link></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </AsyncState>
     </>
   )

@@ -11,15 +11,16 @@ function Renewal() {
 
   return (
     <>
-      <PageTitle title="Renovação e regularização" subtitle="Ações do ciclo do contrato em um único lugar." />
+      <PageTitle title="Renovação e regularização" subtitle="Ações do ciclo do contrato reunidas em um único lugar." />
       <AsyncState loading={loading} error={error} empty={!data?.length}>
         <div className="grid">
           {(data || []).map((item, index) => (
-            <Card key={item.id} title={`${index + 1}. ${item.titulo}`}>
+            <Card key={item.id} className="step-card">
+              <span className="step-num">{index + 1}</span>
+              <h3>{item.titulo}</h3>
               <Badge status={item.status} />
-              <p></p>
               <p>{item.descricao}</p>
-              <button className="btn" onClick={() => mockAction(item.botao)}>{item.botao}</button>
+              <button className={index === 0 ? 'btn' : 'btn btn-outline'} onClick={() => mockAction(item.botao)}>{item.botao}</button>
             </Card>
           ))}
         </div>
